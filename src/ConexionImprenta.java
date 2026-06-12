@@ -5,8 +5,9 @@ import java.util.PriorityQueue;
 import java.util.HashMap;
 
 public class ConexionImprenta {
-
+    //lista de vertices
     private ArrayList<Nodo> nodos;
+    //lista de aristas
     private ArrayList<Imprenta> conexiones;
 
     public ConexionImprenta() {
@@ -21,7 +22,7 @@ public class ConexionImprenta {
     public void insertarConexion(Imprenta conexion) {
         conexiones.add(conexion);
     }
-
+    //metodo para crear una conexion internamente
     public void insertarConexion(Nodo computadora,
                                  Nodo impresora,
                                  int cantidadImpresiones) {
@@ -59,7 +60,7 @@ public class ConexionImprenta {
         }
 
         HashSet<String> visitados = new HashSet<>();
-
+        //ordena los nodos segun su peso
         PriorityQueue<Imprenta> cola =
                 new PriorityQueue<>(
                         Comparator.comparingInt(
@@ -67,8 +68,9 @@ public class ConexionImprenta {
                         )
                 );
 
+        //creacion del nodo inicial
         Nodo inicio = nodos.get(0);
-
+        //se agrega el nodo inicial a la lista de visitados
         visitados.add(inicio.getId());
 
         for (Imprenta conexion : conexiones) {
@@ -87,16 +89,16 @@ public class ConexionImprenta {
         while (!cola.isEmpty()) {
 
             Imprenta actual = cola.poll();
-
+            //creacion de nodo de inicio y lllegada usando computadora e impresora
             Nodo origen = actual.getComputadora();
             Nodo destino = actual.getImpresora();
-
+            //comprueba si ya fue visitado o no
             boolean origenVisitado =
                     visitados.contains(origen.getId());
 
             boolean destinoVisitado =
                     visitados.contains(destino.getId());
-
+            // en caso de ambos ya fueron visitados se pasa a la siguente conexion
             if (origenVisitado && destinoVisitado) {
                 continue;
             }
@@ -131,7 +133,7 @@ public class ConexionImprenta {
 
         return resultado.toString();
     }
-
+      // busca la raiz del arbol revisando si son del mismo grupo
     private int find(ArrayList<Integer> padre, int nodo){
 
         if(padre.get(nodo) == nodo){
@@ -143,7 +145,7 @@ public class ConexionImprenta {
                 padre.get(nodo)
         );
     }
-
+       //en caso de no estar en el mismo grupo los une
     private void union(ArrayList<Integer> padre,
                        int a,
                        int b){
@@ -155,10 +157,10 @@ public class ConexionImprenta {
     }
 
     public String kruskal(){
-
+         //copia de la lista original
         ArrayList<Imprenta> ordenadas =
                 new ArrayList<>(conexiones);
-
+         //ordena de menor timepo a mayor
         ordenadas.sort(
                 Comparator.comparingInt(
                         Imprenta::getTiempodeimpresion
@@ -186,7 +188,7 @@ public class ConexionImprenta {
             int destino = nodos.indexOf(
                     conexion.getImpresora()
             );
-
+           //comprobacion de que no existe ciclos
             if(find(padre, origen)
                     !=
                     find(padre, destino)){
