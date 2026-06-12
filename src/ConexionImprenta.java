@@ -132,10 +132,9 @@ public class ConexionImprenta {
         return resultado.toString();
     }
 
-    private String find(HashMap<String,String> padre,
-                        String nodo){
+    private int find(ArrayList<Integer> padre, int nodo){
 
-        if(padre.get(nodo).equals(nodo)){
+        if(padre.get(nodo) == nodo){
             return nodo;
         }
 
@@ -145,14 +144,14 @@ public class ConexionImprenta {
         );
     }
 
-    private void union(HashMap<String,String> padre,
-                       String a,
-                       String b){
+    private void union(ArrayList<Integer> padre,
+                       int a,
+                       int b){
 
-        String raizA = find(padre,a);
-        String raizB = find(padre,b);
+        int raizA = find(padre, a);
+        int raizB = find(padre, b);
 
-        padre.put(raizA,raizB);
+        padre.set(raizA, raizB);
     }
 
     public String kruskal(){
@@ -166,15 +165,11 @@ public class ConexionImprenta {
                 )
         );
 
-        HashMap<String,String> padre =
-                new HashMap<>();
+        ArrayList<Integer> padre =
+                new ArrayList<>();
 
-        for(Nodo nodo : nodos){
-
-            padre.put(
-                    nodo.getId(),
-                    nodo.getId()
-            );
+        for(int i = 0; i < nodos.size(); i++){
+            padre.add(i);
         }
 
         StringBuilder resultado =
@@ -184,21 +179,17 @@ public class ConexionImprenta {
 
         for(Imprenta conexion : ordenadas){
 
-            String origen =
+            int origen = nodos.indexOf(
                     conexion.getComputadora()
-                            .getId();
+            );
 
-            String destino =
+            int destino = nodos.indexOf(
                     conexion.getImpresora()
-                            .getId();
+            );
 
-            if(!find(padre,origen)
-                    .equals(
-                            find(
-                                    padre,
-                                    destino
-                            )
-                    )){
+            if(find(padre, origen)
+                    !=
+                    find(padre, destino)){
 
                 resultado.append(
                         conexion.toString()
