@@ -7,7 +7,7 @@ public class Ventanaimprenta {
     private JButton btnprim;
     private JButton btnkruskal;
     private JTextArea txtresultados;
-    private ConexionImprenta red;
+    private ConexionRouter red;
 
 
     public static void main(String[] args) {
@@ -19,7 +19,7 @@ public class Ventanaimprenta {
     }
 
     public Ventanaimprenta() {
-        ConexionImprenta red = new ConexionImprenta();
+        ConexionRouter red = new ConexionRouter();
         red.predefinir();
         btnprim.addActionListener(new ActionListener() {
             @Override

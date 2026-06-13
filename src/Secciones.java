@@ -1,9 +1,9 @@
-public class Imprenta {
+public class Secciones {
     private Nodo origen;
     private  Nodo destino;
     private int longitud;
 
-    public Imprenta(Nodo origen, Nodo destino, int longuitud) {
+    public Secciones(Nodo origen, Nodo destino, int longuitud) {
         this.origen = origen;
         this.destino = destino;
         this.longitud = longuitud;

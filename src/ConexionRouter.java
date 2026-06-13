@@ -2,15 +2,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.PriorityQueue;
-import java.util.HashMap;
 
-public class ConexionImprenta {
+public class ConexionRouter {
     //lista de vertices
     private ArrayList<Nodo> nodos;
     //lista de aristas
-    private ArrayList<Imprenta> conexiones;
+    private ArrayList<Secciones> conexiones;
 
-    public ConexionImprenta() {
+    public ConexionRouter() {
         nodos = new ArrayList<>();
         conexiones = new ArrayList<>();
     }
@@ -19,7 +18,7 @@ public class ConexionImprenta {
         nodos.add(nodo);
     }
 
-    public void insertarConexion(Imprenta conexion) {
+    public void insertarConexion(Secciones conexion) {
         conexiones.add(conexion);
     }
     //metodo para crear una conexion internamente
@@ -28,7 +27,7 @@ public class ConexionImprenta {
                                  int cantidadImpresiones) {
 
         conexiones.add(
-                new Imprenta(
+                new Secciones(
                         computadora,
                         impresora,
                         cantidadImpresiones
@@ -44,7 +43,7 @@ public class ConexionImprenta {
 
         StringBuilder datos = new StringBuilder();
 
-        for (Imprenta conexion : conexiones) {
+        for (Secciones conexion : conexiones) {
             datos.append(conexion.toString()).append("\n");
         }
 
@@ -61,10 +60,10 @@ public class ConexionImprenta {
 
         HashSet<String> visitados = new HashSet<>();
         //ordena los nodos segun su peso
-        PriorityQueue<Imprenta> cola =
+        PriorityQueue<Secciones> cola =
                 new PriorityQueue<>(
                         Comparator.comparingInt(
-                                Imprenta::getLongitud
+                                Secciones::getLongitud
                         )
                 );
 
@@ -73,7 +72,7 @@ public class ConexionImprenta {
         //se agrega el nodo inicial a la lista de visitados
         visitados.add(inicio.getId());
 
-        for (Imprenta conexion : conexiones) {
+        for (Secciones conexion : conexiones) {
 
             if (conexion.getOrigen().getId().equals(inicio.getId())
                     || conexion.getDestino().getId().equals(inicio.getId())) {
@@ -88,7 +87,7 @@ public class ConexionImprenta {
 
         while (!cola.isEmpty()) {
 
-            Imprenta actual = cola.poll();
+            Secciones actual = cola.poll();
             //creacion de nodo de inicio y lllegada usando computadora e impresora
             Nodo origen = actual.getOrigen();
             Nodo destino = actual.getDestino();
@@ -118,7 +117,7 @@ public class ConexionImprenta {
 
             costoTotal += actual.getLongitud();
 
-            for (Imprenta conexion : conexiones) {
+            for (Secciones conexion : conexiones) {
 
                 if (conexion.getOrigen().getId().equals(nuevo.getId())
                         || conexion.getDestino().getId().equals(nuevo.getId())) {
@@ -158,12 +157,12 @@ public class ConexionImprenta {
 
     public String kruskal(){
          //copia de la lista original
-        ArrayList<Imprenta> ordenadas =
+        ArrayList<Secciones> ordenadas =
                 new ArrayList<>(conexiones);
          //ordena de menor timepo a mayor
         ordenadas.sort(
                 Comparator.comparingInt(
-                        Imprenta::getLongitud
+                        Secciones::getLongitud
                 )
         );
 
@@ -179,7 +178,7 @@ public class ConexionImprenta {
 
         int costoTotal = 0;
 
-        for(Imprenta conexion : ordenadas){
+        for(Secciones conexion : ordenadas){
 
             int origen = nodos.indexOf(
                     conexion.getOrigen()
