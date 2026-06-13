@@ -1,32 +1,31 @@
 public class Imprenta {
-    private Nodo computadora;
-    private  Nodo impresora;
-    private int tiempodeimpresion;
+    private Nodo origen;
+    private  Nodo destino;
+    private int longitud;
 
-    public Imprenta(Nodo computadora, Nodo impresora, int cantidadimpresiones) {
-        this.computadora = computadora;
-        this.impresora = impresora;
-        this.tiempodeimpresion = cantidadimpresiones;
+    public Imprenta(Nodo origen, Nodo destino, int longuitud) {
+        this.origen = origen;
+        this.destino = destino;
+        this.longitud = longuitud;
     }
 
-    public Nodo getComputadora() {
-        return computadora;
+    public Nodo getOrigen() {
+        return origen;
     }
 
-    public Nodo getImpresora() {
-        return impresora;
+    public Nodo getDestino() {
+        return destino;
     }
 
-    public int getTiempodeimpresion() {
-        return tiempodeimpresion;
+    public int getLongitud() {
+        return longitud;
     }
 
     @Override
     public String toString() {
-        return computadora.getNombre()
-                + " -> "
-                + impresora.getNombre()
-                + " : "
-                + tiempodeimpresion;
+
+        return origen.getId() + " (" + origen.getNombre() + ")"
+                + " ---- " + longitud + " ---- "
+                + destino.getId() + " (" + destino.getNombre() + ")";
     }
 }

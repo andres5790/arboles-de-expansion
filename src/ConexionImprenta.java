@@ -64,7 +64,7 @@ public class ConexionImprenta {
         PriorityQueue<Imprenta> cola =
                 new PriorityQueue<>(
                         Comparator.comparingInt(
-                                Imprenta::getTiempodeimpresion
+                                Imprenta::getLongitud
                         )
                 );
 
@@ -75,8 +75,8 @@ public class ConexionImprenta {
 
         for (Imprenta conexion : conexiones) {
 
-            if (conexion.getComputadora().getId().equals(inicio.getId())
-                    || conexion.getImpresora().getId().equals(inicio.getId())) {
+            if (conexion.getOrigen().getId().equals(inicio.getId())
+                    || conexion.getDestino().getId().equals(inicio.getId())) {
 
                 cola.offer(conexion);
             }
@@ -90,8 +90,8 @@ public class ConexionImprenta {
 
             Imprenta actual = cola.poll();
             //creacion de nodo de inicio y lllegada usando computadora e impresora
-            Nodo origen = actual.getComputadora();
-            Nodo destino = actual.getImpresora();
+            Nodo origen = actual.getOrigen();
+            Nodo destino = actual.getDestino();
             //comprueba si ya fue visitado o no
             boolean origenVisitado =
                     visitados.contains(origen.getId());
@@ -116,12 +116,12 @@ public class ConexionImprenta {
             resultado.append(actual.toString())
                     .append("\n");
 
-            costoTotal += actual.getTiempodeimpresion();
+            costoTotal += actual.getLongitud();
 
             for (Imprenta conexion : conexiones) {
 
-                if (conexion.getComputadora().getId().equals(nuevo.getId())
-                        || conexion.getImpresora().getId().equals(nuevo.getId())) {
+                if (conexion.getOrigen().getId().equals(nuevo.getId())
+                        || conexion.getDestino().getId().equals(nuevo.getId())) {
 
                     cola.offer(conexion);
                 }
@@ -163,7 +163,7 @@ public class ConexionImprenta {
          //ordena de menor timepo a mayor
         ordenadas.sort(
                 Comparator.comparingInt(
-                        Imprenta::getTiempodeimpresion
+                        Imprenta::getLongitud
                 )
         );
 
@@ -182,11 +182,11 @@ public class ConexionImprenta {
         for(Imprenta conexion : ordenadas){
 
             int origen = nodos.indexOf(
-                    conexion.getComputadora()
+                    conexion.getOrigen()
             );
 
             int destino = nodos.indexOf(
-                    conexion.getImpresora()
+                    conexion.getDestino()
             );
            //comprobacion de que no existe ciclos
             if(find(padre, origen)
@@ -198,7 +198,7 @@ public class ConexionImprenta {
                 ).append("\n");
 
                 costoTotal +=
-                        conexion.getTiempodeimpresion();
+                        conexion.getLongitud();
 
                 union(
                         padre,
@@ -216,25 +216,40 @@ public class ConexionImprenta {
     }
 
     public void predefinir() {
+        Nodo r1=new Nodo("R001","WIFI23");
+        Nodo r2=new Nodo("R002","LAN234");
+        Nodo r3=new Nodo("R0003","netlifer");
+        Nodo r4=new Nodo("R004","Queso23");
+        Nodo r5=new Nodo("R005","Tpc45");
+        Nodo r6=new Nodo("R006","Wifiveci");
+        Nodo r7=new Nodo("R007","Patata");
+        Nodo r8=new Nodo("R008","Casawifi");
+        insertarNodo(r1);
+        insertarNodo(r2);
+        insertarNodo(r3);
+        insertarNodo(r4);
+        insertarNodo(r5);
+        insertarNodo(r6);
+        insertarNodo(r7);
+        insertarNodo(r8);
 
-        Nodo pc1 = new Nodo("PC0015", "PCLAB", "Computadora");
-        Nodo pc2 = new Nodo("PC230", "PCSUB2", "Computadora");
-        Nodo pc3 = new Nodo("PC734", "PCBIBLIOTECA", "Computadora");
+        insertarConexion(r1,r2,7);
+        insertarConexion(r1,r3,18);
+        insertarConexion(r1,r4,3);
+        insertarConexion(r2,r3,7);
+        insertarConexion(r2,r7,9);
+        insertarConexion(r3,r5,8);
+        insertarConexion(r3,r4,7);
+        insertarConexion(r4,r6,15);
+        insertarConexion(r4,r5,9);
+        insertarConexion(r5,r7,3);
+        insertarConexion(r5,r6,3);
+        insertarConexion(r5,r8,4);
+        insertarConexion(r6,r8,10);
+        insertarConexion(r7,r8,5);
 
-        Nodo imp1 = new Nodo("I0123", "HP", "Impresora");
-        Nodo imp2 = new Nodo("I6403", "Canon", "Impresora");
-
-        insertarNodo(pc1);
-        insertarNodo(pc2);
-        insertarNodo(pc3);
-        insertarNodo(imp1);
-        insertarNodo(imp2);
-
-        insertarConexion(pc1, imp1, 10);
-        insertarConexion(pc1, imp2, 5);
-        insertarConexion(pc2, imp1, 15);
-        insertarConexion(pc2,imp2,7);
-        insertarConexion(pc3, imp2, 3);
-        insertarConexion(pc3,imp1,16);
     }
+
+
+
 }
